@@ -1,7 +1,7 @@
 {
   "name": "ts-node-starter-kit",
   "version": "1.0.0",
-  "description": "",
+  "description": "This is a simple starter kit for a Node.js project using TypeScript. It includes a basic setup for TypeScript, Nodemon, and a tsconfig.json file. ",
   "main": "./dist/main.js",
   "scripts": {
     "start": "node ./dist/main.js",
