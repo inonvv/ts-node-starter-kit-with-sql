@@ -12,7 +12,7 @@ Feel free to modify and expand upon this starter kit to fit your needs!
 
 1. Copy this repository to your local machine using the following command:
     ```
-    git clone https://github.com/shaykos/ts-node-starter-kit.git
+    git clone https://github.com/shaykos/ts-node-starter-kit-with-sql.git
     ```
 
 2. install all dependencies 
