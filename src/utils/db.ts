@@ -1,79 +1,35 @@
-import { connect } from 'mssql';
-import { Employee } from '../types/employee.type';
+import { MongoClient } from "mongodb";
+import "dotenv/config";
+import { Request, Response } from "express";
+import { log } from "console";
 
-export default class Db {
+export const DB_INFO = {
+  // host: process.env.CONNECTION_STRING as string,
+  host: `mongodb+srv://inonv31:2paqIrfGTOqLzU7B@flyandtravelc.e4es3tk.mongodb.net/?retryWrites=true&w=majority&appName=flyAndTravelC`,
+  // db: process.env.DB_NAME,
+  db: "form",
+};
 
-    static connectionString = "workstation id=nodejsSQL.mssql.somee.com;packet size=4096;user id=shaykos_SQLLogin_1;pwd=9hida4w53i;data source=nodejsSQL.mssql.somee.com;persist security info=False;initial catalog=nodejsSQL;TrustServerCertificate=True";
-
-    static async selectData(query: string): Promise<Employee[] | undefined> {
-        try {
-            const pool = await connect(Db.connectionString);
-            const result = await pool.request().query(query);
-            let data = result.recordset;
-            let employees: Employee[] = [];
-            for (let index = 0; index < data.length; index++) {
-                const element = data[index];
-                employees.push({
-                    id: element.id,
-                    first_name: element.first_name,
-                    last_name: element.last_name,
-                    birthday: new Date(element.birthday)
-                });
-            }
-            return employees;
-        } catch (err) {
-            console.log(err);
-        }
+/**
+ * Saves a user to the database
+ * @param {UserType} user - The user object to save.
+ * @param {string} procName - The stored procedure name.
+ * @return {Promise<any>} The result of the database operation.
+ */
+export class DBConnection {
+  private static instance: MongoClient | null;
+  private constructor() {}
+  public static async getInstance(): Promise<MongoClient> {
+    if (!DBConnection.instance) {
+      DBConnection.instance = new MongoClient(DB_INFO.host);
+      await DBConnection.instance.connect();
     }
-
-    static async insertData_NotSecure(table: string, params: {}): Promise<any> {
-        try {
-            let query = ``;
-            switch (table) {
-                case 'Employee':
-                    query = 'exec InsertEmployee ';
-                    break;
-                default:
-                    break;
-            }
-
-            for (const [key, value] of Object.entries(params)) {
-                query += `@${key}='${value}',`;
-            }
-            query = query.slice(0, -1);
-
-            console.log('query', query);
-            // const pool = await connect(Db.connectionString);
-            // return await pool.request().query(query);
-        } catch (err) {
-            console.log(err);
-        }
+    return DBConnection.instance;
+  }
+  public static async closeConnection() {
+    if (DBConnection.instance) {
+      await DBConnection.instance.close();
+      DBConnection.instance = null;
     }
-
-    static async insertEmployee(procName: string, emp: Employee): Promise<any> {
-        try {
-            const pool = await connect(Db.connectionString);
-
-            return await pool.request()
-                .input('id', emp.id)
-                .input('first_name', emp.first_name)
-                .input('last_name', emp.last_name)
-                .input('birthday', emp.birthday)
-                .execute(procName);
-        } catch (err) {
-            console.log(err);
-        }
-    }
-
-    static async deleteEmployees(procName: string): Promise<any> {
-        try {
-            const pool = await connect(Db.connectionString);
-
-            return await pool.request()
-                .execute(procName);
-        } catch (err) {
-            console.log(err);
-        }
-    }
-
+  }
 }

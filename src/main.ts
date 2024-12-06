@@ -1,25 +1,19 @@
 import express from "express";
-import userRouter from "./user/user.routes";
+import cors from "cors";
 
-//enable environment variables
+import formRouter from "./forms/form.routes";
 import "dotenv/config";
+import loginRouter from "./login/login.routes";
 
-//set the port number
 const PORT = process.env.PORT || 5555;
-
-//create express app
 const app = express();
+
+app.use(cors());
 app.use(express.json());
 
-//default GET route
-app.get("/", (req, res) => {
-  res.send("Hello World!");
-});
+app.use("/api/form", formRouter);
+app.use("/api/login", loginRouter);
 
-//user routes
-app.use('/api/users', userRouter);
-
-//listen to the defined port
 app.listen(PORT, () => {
   console.log(`[SERVER] Server is live http://localhost:${PORT}`);
 });
