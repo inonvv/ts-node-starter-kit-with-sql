@@ -4,8 +4,7 @@ import { Request, Response } from "express";
 import { log } from "console";
 
 export const DB_INFO = {
-  // host: process.env.CONNECTION_STRING as string,
-  host: `mongodb+srv://inonv31:2paqIrfGTOqLzU7B@flyandtravelc.e4es3tk.mongodb.net/?retryWrites=true&w=majority&appName=flyAndTravelC`,
+  host: process.env.CONNECTION_STRING as string,
   // db: process.env.DB_NAME,
   db: "form",
 };
