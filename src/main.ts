@@ -1,8 +1,6 @@
 import express from "express";
 import cors from "cors";
-
 import formRouter from "./forms/form.routes";
-import "dotenv/config";
 import loginRouter from "./login/login.routes";
 
 const PORT = process.env.PORT || 5555;
