@@ -5,7 +5,7 @@ import { getFormInformation, PostFormInformation } from "./form.controller";
 const formRouter = Router();
 
 //defined verbs
-formRouter.get("/info   ", getFormInformation);
+formRouter.get("/", getFormInformation);
 formRouter.post("/", PostFormInformation);
 
 //export
