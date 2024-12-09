@@ -1,16 +1,12 @@
 import { MongoClient } from "mongodb";
 import "dotenv/config";
-import { Request, Response } from "express";
-import { log } from "console";
-
 export const DB_INFO = {
   host: process.env.CONNECTION_STRING as string,
   // db: process.env.DB_NAME,
-  db: "form",
+  db: "providence",
 };
 
 /**
- * Saves a user to the database
  * @param {UserType} user - The user object to save.
  * @param {string} procName - The stored procedure name.
  * @return {Promise<any>} The result of the database operation.

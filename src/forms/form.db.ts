@@ -4,7 +4,7 @@ export async function getFormInformationDB(): Promise<any> {
   try {
     const client = await DBConnection.getInstance();
     const db = client.db(DB_INFO.db);
-    const collection = db.collection("form");
+    const collection = db.collection("forms");
     const result = await collection.findOne({});
     return result;
   } catch (error) {
@@ -18,7 +18,7 @@ export async function PostFormInformationDB(form: any): Promise<any> {
   try {
     const client = await DBConnection.getInstance();
     const db = client.db(DB_INFO.db);
-    const collection = db.collection("form");
+    const collection = db.collection("forms");
     await collection.insertOne({ form, timestamp: new Date() });
     return true;
   } catch (error) {
