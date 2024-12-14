@@ -1,6 +1,7 @@
 import { DB_INFO, DBConnection } from "../utils/db";
 
 export async function getFormInformationDB(): Promise<any> {
+  console.log("getFormInformationDB");
   try {
     const client = await DBConnection.getInstance();
     const db = client.db(DB_INFO.db);
